@@ -1,0 +1,114 @@
+.crazy-cursor {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  background: var(--cursor-color);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: 
+    width 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    transform 0.1s ease-out;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  filter: drop-shadow(0 0 8px var(--cursor-color));
+  will-change: transform;
+  animation: float 3s ease-in-out infinite;
+}
+
+.crazy-cursor.hovering {
+  width: 16px;
+  height: 16px;
+  background: white !important;
+  filter: drop-shadow(0 0 12px white) !important;
+}
+
+.crazy-cursor.clicked {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0.8;
+}
+
+.crazy-cursor.spinning {
+  animation: spin 0.5s linear infinite, float 3s ease-in-out infinite;
+}
+
+.trail-circle {
+  position: fixed;
+  width: var(--trail-size);
+  height: var(--trail-size);
+  background: var(--trail-color);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: var(--trail-opacity);
+  filter: blur(1px);
+  transition: all 0.3s ease-out;
+  will-change: transform;
+}
+
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--particle-color);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  animation: 
+    particle-fade 0.6s ease-out forwards,
+    particle-explode 0.6s ease-out forwards;
+  filter: drop-shadow(0 0 4px var(--particle-color));
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg) scale(1.2); }
+  to { transform: translate(-50%, -50%) rotate(360deg) scale(1.2); }
+}
+
+@keyframes particle-fade {
+  to { opacity: 0; }
+}
+
+@keyframes particle-explode {
+  to { transform: rotate(var(--rotate)) translateY(80px) scale(0.5); }
+}
+
+/* Glitch effect on hover */
+.crazy-cursor.hovering::before,
+.crazy-cursor.hovering::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: inherit;
+  mix-blend-mode: difference;
+  animation: glitch-anim 2s infinite linear alternate;
+}
+
+.crazy-cursor.hovering::before {
+  animation-delay: 0.1s;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.crazy-cursor.hovering::after {
+  animation-delay: 0.2s;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
+  100% { transform: translate(0); }
+}
