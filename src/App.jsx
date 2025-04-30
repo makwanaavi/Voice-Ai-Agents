@@ -11,8 +11,10 @@ import Testimonials from "./components/Testimonials"; // Your Testimonials compo
 import MobileSDK from "./components/MobileSDK"; // Your MobileSDK component
 import FinalCTA from "./components/FinalCTA"; // Your FinalCTA component
 import ThemeToggleButton from "./components/ThemeToggleButton"; // Import ThemeToggleButton
+import useLenis from './components/useLenis'; 
 
 const App = () => {
+  useLenis();
   return (
     <ThemeProvider>
       <ThemeToggleButton />
